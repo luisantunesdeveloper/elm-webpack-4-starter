@@ -10,9 +10,7 @@ import Navigation exposing (Location)
 
 
 type Route
-    = Home
-    | About
-
+    = Login
 
 
 --    When needing parameters on the form base/item/id
@@ -22,8 +20,7 @@ type Route
 routeMatcher : Parser (Route -> a) a
 routeMatcher =
     oneOf
-        [ Url.map Home (s "")
-        , Url.map About (s "about")
+        [ Url.map Login (s "login")
 
         --    When needing parameters on the form base/item/3
         --    , Url.map Item (s "item" </> string)
@@ -39,11 +36,8 @@ routeToString page =
     let
         pagePath =
             case page of
-                Home ->
+                Login ->
                     []
-
-                About ->
-                    [ "about" ]
 
         --    When needing parameters on the form base/item/3
         --                    Item id ->
@@ -69,6 +63,6 @@ modifyUrl =
 fromLocation : Location -> Maybe Route
 fromLocation location =
     if String.isEmpty location.hash then
-        Just Home
+        Just Login
     else
         parseHash routeMatcher location
